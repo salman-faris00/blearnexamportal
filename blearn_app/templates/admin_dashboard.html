@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="{% static 'images/blearn_logo.png' %}" style="height: 50px; width: auto;" alt="Logo">
+      </a>
+  
+      <!-- Toggler button for small screens -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <div class="text-end mb-3">
+        <a href="{% url 'view_results' %}" class="btn btn-success">View Result</a>
+    </div>&nbsp;
+
+
+    <div class="text-end mb-3">
+        <a href="{% url 'add_question' %}" class="btn btn-success">Add Question</a>
+    </div>
+      </div>
+    </div>
+  </nav>
+
+    
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ADMIN DASHBOARD</h2>
+
+
+    
+
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Question</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Option 1</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Option 2</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Option 3</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Option 4</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Correct Answer</th>
+                <th style="background-color: rgb(11, 90, 175);color: white;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.question_text }}</td>
+                    <td>{{ question.option1 }}</td>
+                    <td>{{ question.option2 }}</td>
+                    <td>{{ question.option3 }}</td>
+                    <td>{{ question.option4 }}</td>
+                    <td>{{ question.correct_answer }}</td>
+                    <td>
+                        <a href="{% url 'edit_question' question.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_question' question.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

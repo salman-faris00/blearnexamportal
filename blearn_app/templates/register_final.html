@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Registration</title>
+  {% load static %}
+
+  <!-- Bootstrap & Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0a0c4fa.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+    }
+
+    h2 {
+      font-weight: bold;
+      color: #343a40;
+    }
+
+    .form-floating {
+      margin-bottom: 1rem;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #007bff, #0056b3);
+      border: none;
+      padding: 0.5rem;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(45deg, #0056b3, #004399);
+    }
+
+    .alert {
+      max-width: 500px;
+      margin: 1rem auto 0;
+    }
+
+    .img-side {
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 767.98px) {
+      .img-side {
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: rgb(20, 20, 42);">
+  <div class="container-fluid px-0">
+    <a class="navbar-brand ms-3" href="#">
+      <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
+    </a>
+    <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <div class="d-flex align-items-center gap-2 gap-lg-3 me-3">
+        <a href="{% url 'login' %}" class="px-4 py-2 btn" style="background-color: #0070B9; color: white;">Login</a>
+        <a href="https://wa.me/919917442288" target="_blank" class="px-4 py-2 btn" style="background-color: #0070B9; color: white;">
+          <i class="fa-brands fa-whatsapp"></i> Connect us
+        </a>
+        <a href="tel:+919917442288" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
+          <i class="fa-solid fa-phone"></i> Call us
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Section -->
+<div class="main-container container">
+  <div class="row w-100 align-items-center">
+    <!-- Form Section -->
+    <div class="col-md-6">
+      <div class="form-container"  >
+        <div class="text-center mb-3">
+          <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
+          <h2 class="mt-2">Student Registration</h2>
+        </div>
+
+        <form method="POST" action="{% url 'register' %}" novalidate>
+          {% csrf_token %}
+          <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
+            <label for="email">Email</label>
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required minlength="6">
+            <label for="password">Create Password</label>
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+            <label for="confirm_password">Confirm Password</label>
+            <div class="invalid-feedback">Passwords do not match.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            <label for="name">Full Name</label>
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="tel" name="phone_no" class="form-control" id="phone" placeholder="1234567890" pattern="[0-9]{10}" required>
+            <label for="phone">Phone Number</label>
+            <div class="form-text">Enter 10-digit phone number.</div>
+            <div class="invalid-feedback">Please enter a valid phone number.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" name="qualification" class="form-control" id="qualification" placeholder="Qualification" required>
+            <label for="qualification">Qualification</label>
+            <div class="invalid-feedback">Please enter your qualification.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" name="department" class="form-control" id="department" placeholder="Department" required>
+            <label for="department">Department</label>
+            <div class="invalid-feedback">Please enter your department.</div>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" name="college" class="form-control" id="college" placeholder="College/University" required>
+            <label for="college">College/University</label>
+            <div class="invalid-feedback">Please enter your college name.</div>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Image Section -->
+    <div class="col-md-6 text-center">
+      <img src="{% static 'images/register_image8.png' %}" alt="Registration Image" class="img-side img-fluid">
+    </div>
+  </div>
+</div>
+
+<!-- Alert Messages -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-danger text-center">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Validation Script -->
+<script>
+  (function () {
+    'use strict';
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+      const pwd = document.getElementById('password');
+      const cpwd = document.getElementById('confirm_password');
+      let valid = true;
+
+      if (pwd.value !== cpwd.value) {
+        cpwd.classList.add('is-invalid');
+        valid = false;
+      } else {
+        cpwd.classList.remove('is-invalid');
+      }
+
+      if (pwd.value.length < 6) {
+        pwd.classList.add('is-invalid');
+        valid = false;
+      } else {
+        pwd.classList.remove('is-invalid');
+      }
+
+      if (!valid) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated');
+    }, false);
+  })();
+</script>
+</body>
+</html>

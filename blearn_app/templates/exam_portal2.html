@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {% load static %}
+  <title>Exam Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+  <style>
+    body { user-select: none; }
+    .question-card { display: none; }
+
+    .form-check-input:checked + .form-check-label {
+      background-color: #d1e7dd;
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: #0f5132;
+      font-weight: bold;
+    }
+
+    .form-check-label {
+      display: block;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+
+    .form-check-label:hover {
+      background-color: #e2e3e5;
+    }
+
+    .form-check-input {
+      display: none;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;" oncopy="return false;">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="{% static 'images/blearn_logo.png' %}" style="height: 50px;" alt="Logo">
+      </a>
+      <div class="collapse navbar-collapse justify-content-end">
+        <h1 class="fw-bold text-white text-center w-100">Student Portal</h1>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Exam Portal</h2>
+
+    <!-- Webcam -->
+    <div class="text-center mb-3">
+      <h5>Webcam Monitoring Active</h5>
+      <video id="webcam" width="320" height="240" autoplay muted playsinline></video>
+      <p id="face-status" class="text-danger fw-bold mt-2"></p>
+    </div>
+
+    <!-- Audio -->
+    <div class="text-center mb-3">
+      <h5>Audio Monitoring Active</h5>
+      <p id="audio-status" class="text-danger fw-bold mt-2"></p>
+    </div>
+
+    <!-- Timer -->
+    <div class="alert alert-info text-center" id="timer">Time Left: 30:00</div>
+
+    <!-- Exam Form -->
+    <form id="examForm" method="POST" action="{% url 'submit_exam' %}">
+      {% csrf_token %}
+      <div id="questions-container">
+        {% for q in questions %}
+          {% if forloop.counter <= 25 %}
+          <div class="card mb-3 question-card" data-index="{{ forloop.counter0 }}">
+            <div class="card-body">
+              <h5>{{ forloop.counter }}. {{ q.question_text }}</h5>
+              {% for opt in q.options|split:"," %}
+  <div class="form-check">
+    <input type="radio" id="q{{ q.id }}_{{ forloop.counter }}" name="q{{ q.id }}" value="{{ opt }}" class="form-check-input" required>
+    <label class="form-check-label" for="q{{ q.id }}_{{ forloop.counter }}">{{ opt }}</label>
+  </div>
+{% endfor %}
+
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="text-center mb-5">
+        <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Warning Modal -->
+  <div class="modal fade" id="warningModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Warning</h5></div>
+        <div class="modal-body" id="warningMessage"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+    const warningMsgEl = document.getElementById('warningMessage');
+    let violations = 0, terminated = false;
+    const MAX = 3;
+
+    function showWarning(msg, callback) {
+      warningMsgEl.textContent = msg;
+      warningModal.show();
+      if (callback) {
+        document.getElementById('warningModal').addEventListener('hidden.bs.modal', callback, { once: true });
+      }
+    }
+
+    function handleViolation(reason) {
+      if (terminated) return;
+      violations++;
+      showWarning(`${reason} detected! Warning`, () => {
+        if (violations >= MAX && !terminated) {
+          terminated = true;
+          showWarning('Exam terminated due to repeated violations.', () => {
+            document.getElementById('examForm').submit();
+          });
+        }
+      });
+    }
+
+    // Tab switch and window blur detection
+    let visCD = false, blurCD = false;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !visCD) {
+        visCD = true;
+        handleViolation('Tab switch');
+        setTimeout(() => visCD = false, 10000);
+      }
+    });
+    window.addEventListener('blur', () => {
+      if (!blurCD) {
+        blurCD = true;
+        handleViolation('Window out of focus');
+        setTimeout(() => blurCD = false, 10000);
+      }
+    });
+
+    // Question navigation
+    const cards = document.querySelectorAll('.question-card');
+    let current = 0;
+
+    function showQuestion(i) {
+      cards.forEach(c => c.style.display = 'none');
+      cards[i].style.display = 'block';
+      const btn = document.getElementById('next-btn');
+      btn.textContent = i === cards.length - 1 ? 'Submit Exam' : 'Next';
+      btn.type = i === cards.length - 1 ? 'submit' : 'button';
+    }
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      const inputs = cards[current].querySelectorAll('input[type=radio]');
+      if (![...inputs].some(i => i.checked)) {
+        showWarning('Please select an option to proceed.');
+        return;
+      }
+      current++;
+      showQuestion(current);
+    });
+
+    showQuestion(0);
+
+    // Timer countdown
+    (function(){
+      let sec = 30 * 60, timer = document.getElementById('timer');
+      setInterval(() => {
+        if (terminated) return;
+        let m = Math.floor(sec / 60), s = sec % 60;
+        timer.textContent = `Time Left: ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        if (--sec < 0) {
+          terminated = true;
+          showWarning("Time's up! Submitting your exam.", () => {
+            document.getElementById('examForm').submit();
+          });
+        }
+      }, 1000);
+    })();
+
+    // Webcam monitoring with BlazeFace
+    async function startFace(){
+      const model = await blazeface.load();
+      const vid = document.getElementById('webcam');
+      let faceCD = false;
+      try {
+        vid.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
+      } catch (e) {
+        showWarning('Webcam access required.');
+        document.getElementById('next-btn').disabled = true;
+        return;
+      }
+      setInterval(async () => {
+        if (terminated) return;
+        const preds = await model.estimateFaces(vid, false);
+        document.getElementById('face-status').textContent = preds.length ? '' : 'Face not detected!';
+        if (!preds.length && !faceCD) {
+          faceCD = true;
+          handleViolation('No face detected');
+          setTimeout(() => faceCD = false, 10000);
+        }
+      }, 5000);
+    }
+
+    // Audio monitoring
+    async function startAudio(){
+      let audioCtx, analyser, data, audioCD = false;
+      try {
+        const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioCtx = new AudioContext();
+        const src = audioCtx.createMediaStreamSource(mic);
+        analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
+        src.connect(analyser);
+        data = new Uint8Array(analyser.fftSize);
+      } catch (e) {
+        showWarning('Microphone access required.');
+        document.getElementById('next-btn').disabled = true;
+        return;
+      }
+      setInterval(() => {
+        if (terminated) return;
+        analyser.getByteTimeDomainData(data);
+        let sum = 0;
+        for (let v of data) { let x = (v - 128) / 128; sum += x * x; }
+        let rms = Math.sqrt(sum / data.length);
+        document.getElementById('audio-status').textContent = rms > 0.05 ? 'Talking Detected!' : '';
+        if (rms > 0.05 && !audioCD) {
+          audioCD = true;
+          handleViolation('Audio violation');
+          setTimeout(() => audioCD = false, 10000);
+        }
+      }, 3000);
+    }
+
+    // Start monitoring
+    startFace();
+    startAudio();
+  </script>
+</body>
+</html>

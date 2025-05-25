@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      color: navy;
+    }
+  </style>
+</head>
+<body>
+  <h2>Student Exam Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Email</th>
+        <th>Score</th>
+        <th>Correct Answers</th>
+        <th>Total Questions</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+      <tr>
+        <td>{{ result.student.Name }}</td>
+        <td style="width: 200px;">{{ result.student.Email }}</td>
+        <td>{{ result.score }}</td>
+        <td>{{ result.correct_answers }}</td>
+        <td>{{ result.total_questions }}</td>
+        <td>{{ result.date_taken }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

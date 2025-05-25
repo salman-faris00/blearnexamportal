@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      background: url("{% static 'images/register_image7.png' %}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .btn-custom {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .btn-custom:disabled,
+    .btn-custom[aria-disabled="true"] {
+      background-color: #084f79;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-custom:hover:enabled {
+      background-color: #2e86c1;
+    }
+
+    .modal-content {
+      border-radius: 10px;
+    }
+
+    .modal-header {
+      background-color: #7fb9f7;
+      color: white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .instructions {
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .exam-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #00ffff;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 50px auto;
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #005f5f inset;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    @media (max-width: 576px) {
+      .exam-box {
+        padding: 20px;
+      }
+    }
+
+    .start-btn {
+      background: linear-gradient(145deg, #00ffff, #005f5f);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff;
+      transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .navbar .btn {
+        font-size: 14px;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(20, 20, 42);">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" style="height: 50px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <a href="https://wa.me/919917442288" target="_blank" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <i class="fa-brands fa-whatsapp"></i> Connect
+          </a>
+          <a href="tel:+919917442288" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <i class="fa-solid fa-phone"></i> Call
+          </a>
+          <a href="{% url 'logout' %}" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Title -->
+  <div class="container text-center mt-5">
+    <h1 class="text-white">
+      <div class="d-inline-block p-3 rounded" style="border: 3px solid white; background-color: rgba(0,0,0,0.5);">
+        Student Portal
+      </div>
+    </h1>
+  </div>
+
+  <!-- Exam Box -->
+  <div class="container">
+    <div class="exam-box col-md-8 col-lg-6 mx-auto mt-4">
+      <h2>Welcome {{ name }}!</h2>
+      <h2 class="mb-4">Ready to Begin?</h2>
+      <button class="start-btn" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+        Start Exam
+      </button>
+    </div>
+  </div>
+
+  <!-- Instructions Modal -->
+  <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="instructionsLabel">Exam Rules & Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body instructions">
+          <ol>
+            <li>The exam consists of 25 multiple-choice questions.</li>
+            <li>You will have 30 minutes to complete the exam.</li>
+            <li>Switching tabs, minimizing browser, or leaving fullscreen is not allowed.</li>
+            <li>Your webcam and microphone will monitor your actions during the exam.</li>
+            <li>Copying, pasting, and right-clicking are disabled during the exam.</li>
+            <li>Any violation may lead to auto-submission or disqualification.</li>
+            <li>No external materials or assistance is allowed.</li>
+            <li>Ensure stable internet throughout the exam duration.</li>
+          </ol>
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="agreeCheckbox" style="background-color: #0d6efd75;">
+            <label class="form-check-label" for="agreeCheckbox" style="color: red;">
+              I have read and agree to all the above instructions.
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <a href="{% url 'exam_portal' %}"
+             class="btn btn-custom disabled"
+             id="proceedBtn"
+             onclick="return document.getElementById('agreeCheckbox').checked;"
+             aria-disabled="true">
+            Start Exam
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS to toggle Start button -->
+  <script>
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    const proceedBtn = document.getElementById('proceedBtn');
+
+    agreeCheckbox.addEventListener('change', () => {
+      if (agreeCheckbox.checked) {
+        proceedBtn.classList.remove('disabled');
+        proceedBtn.removeAttribute('aria-disabled');
+      } else {
+        proceedBtn.classList.add('disabled');
+        proceedBtn.setAttribute('aria-disabled', 'true');
+      }
+    });
+  </script>
+
+</body>
+</html>

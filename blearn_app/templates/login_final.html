@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <title>Student Login</title>
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #012f34, #003e3f);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar customizations */
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        /* Center the form vertically & horizontally */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .login-container {
+            background: #023030;
+            border-radius: 20px;
+            padding: 2.5rem 3rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            color: #fff;
+        }
+
+        .login-container h2 {
+            font-weight: 700;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 1.5px;
+        }
+
+        /* Input Group Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 1.75rem;
+        }
+
+        .input-group .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 50px;
+            padding-left: 3.2rem;
+            height: 50px;
+            color: #d1d1d1;
+            font-size: 1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .input-group .form-control::placeholder {
+            color: #a9a9a9;
+        }
+
+        .input-group .form-control:focus {
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Icon Wrapper inside input */
+        .input-group .icon-wrapper {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #023030;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        /* Position icons for username and password */
+        .input-group.username .icon-wrapper {
+            left: 8px;
+        }
+
+        .input-group.password .icon-wrapper {
+            right: 8px;
+        }
+
+        /* Adjust padding-right for password input to avoid overlap with icon */
+        .input-group.password .form-control {
+            padding-right: 3.2rem;
+        }
+
+        /* Login Button */
+        .btn-login {
+            width: 100%;
+            background: #fff;
+            color: #022430;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            transition: background 0.3s;
+        }
+
+        .btn-login:hover,
+        .btn-login:focus {
+            background: #a4d4d3;
+            outline: none;
+        }
+
+        /* Error Message Styling */
+        .alert-danger {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Forgot Password Link */
+        .forgot-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .forgot-link a {
+            color: #7fd1cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-link a:hover,
+        .forgot-link a:focus {
+            text-decoration: underline;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(20, 20, 42);">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="{% static 'images/blearn_logo.png' %}" style="height: 50px; width: auto;" alt="Logo">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="d-flex align-items-center ms-auto me-3 gap-3">
+        <a href="https://wa.me/919917442288" target="_blank" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> Connect us
+        </a>
+        <a href="tel:+919917442288" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
+          <i class="fa-solid fa-phone" style="font-size: 20px;"></i> Call us
+        </a>
+        <a href="{% url 'logout' %}" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
+          <i class="fa-solid fa-power-off" style="font-size: 20px;"></i> Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+
+    <!-- Main content with centered form -->
+    <main>
+        <section class="login-container" role="main" aria-labelledby="loginTitle">
+            <h2 id="loginTitle">STUDENT LOGIN</h2>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="input-group username">
+                    <div class="icon-wrapper">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <input type="email" name="email" placeholder="Enter Your Email" class="form-control" required aria-label="Email" />
+                </div>
+
+                <div class="input-group password">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required aria-label="Password" />
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">LOGIN</button>
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endif %}
+            </form>
+
+            <div class="forgot-link">
+                <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS and dependencies (Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
