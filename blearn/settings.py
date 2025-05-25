@@ -13,9 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "django-insecure-6=62ygw)gm=i(h&!q!p$dpjoj=)ufjhs@*z@647-jakgope#5g"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
-print(os.getenv("ALLOWED_HOSTS"))
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -80,20 +77,20 @@ WSGI_APPLICATION = "blearn.wsgi.application"
 
 # DATABASES = {
 #     "default": {
-#         "ENGINE": os.getenv("ENGINE"),
-#         "NAME": os.getenv("NAME"),
-#         'USER': os.getenv("USER"),  
-#         'PASSWORD': os.getenv("PASSWORD"), 
-#         'HOST': os.getenv("HOST"),  
-#         'PORT': os.getenv("PORT"), 
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "blearn_projects",
+#         'USER': 'root',  
+#         'PASSWORD': "yayi@123liyafathima", 
+#         'HOST': 'localhost',  
+#         'PORT': '3306', 
         
 #     }
 # }
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("SQLITE_ENGINE"),
-        'NAME': BASE_DIR / os.getenv("SQLITE_NAME"),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -142,9 +139,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
-EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
-EMAIL_HOST = os.getenv("EMAIL_HOST")
-EMAIL_PORT = os.getenv("EMAIL_PORT")
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'academyblearn@gmail.com'  # replace with your Gmail
+EMAIL_HOST_PASSWORD = 'fnoy dioe mgzm qwbo'  # use App Password, not your regular Gmail password
