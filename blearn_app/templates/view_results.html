@@ -45,6 +45,12 @@
         <td>{{ result.correct_answers }}</td>
         <td>{{ result.total_questions }}</td>
         <td>{{ result.date_taken }}</td>
+        <td>
+            <form method="post" action="{% url 'delete_result' result.id %}" onsubmit="return confirm('Are you sure you want to delete this result?');">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
       </tr>
       {% endfor %}
     </tbody>

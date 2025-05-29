@@ -1,6 +1,6 @@
 from django.contrib import messages
 import random
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 # Create your views here.
 from .models import*
 from django.core.mail import send_mail
@@ -432,4 +432,10 @@ def download_excel(request):
 
 
 
+def delete_result(request, id):
+    result = get_object_or_404(Result, id=id)
+    if request.method == 'POST':
+        result.delete()
+        return redirect('view_results')  # Replace with your result list view name
+    return redirect('view_results')
 

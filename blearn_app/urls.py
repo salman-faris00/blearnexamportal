@@ -29,6 +29,7 @@ urlpatterns = [
     path('reset-password/<str:email>/', views.reset_password, name='reset_password'),
     path('download-results/', views.download_results_pdf, name='download_results'),
     path('download_excel/', views.download_excel, name='download_excel'),
+path('results/delete/<int:id>/', views.delete_result, name='delete_result'),
 
     
 ]
