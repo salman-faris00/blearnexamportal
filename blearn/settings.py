@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'blearn_app.time_restrict_middleware.TimeRestrictionMiddleware',
 ]
 
 ROOT_URLCONF = "blearn.urls"
