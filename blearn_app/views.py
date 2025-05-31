@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 import openpyxl
-
+from django.db.models import Q
 
 def registration_page(request):
     return render(request,"register.html")
@@ -438,4 +438,5 @@ def delete_result(request, id):
         result.delete()
         return redirect('view_results')  # Replace with your result list view name
     return redirect('view_results')
+
 

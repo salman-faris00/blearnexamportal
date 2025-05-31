@@ -31,5 +31,10 @@ urlpatterns = [
     path('download_excel/', views.download_excel, name='download_excel'),
 path('results/delete/<int:id>/', views.delete_result, name='delete_result'),
 
+
+
+
+
+
     
 ]

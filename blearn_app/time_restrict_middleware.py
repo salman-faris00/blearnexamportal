@@ -9,8 +9,8 @@ class TimeRestrictionMiddleware:
     def __call__(self, request):
         now = localtime().time()  # Gets the current time in the local timezone
 
-        start_time = time(10, 0)   # 10:00 AM
-        end_time = time(12, 30)    # 12:30 PM
+        start_time = time(13, 50)   # 10:00 AM
+        end_time = time(14, 5)    # 12:30 PM
 
         if start_time <= now <= end_time:
             return self.get_response(request)
