@@ -440,3 +440,7 @@ def delete_result(request, id):
     return redirect('view_results')
 
 
+
+def list_students(request):
+    students = student.objects.all()
+    return render(request, 'students.html', {'students': students})

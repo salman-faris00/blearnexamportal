@@ -30,6 +30,7 @@
         <th>Score</th>
         <th>Correct Answers</th>
         <th>Total Questions</th>
+        <th>Contact Number</th>
         <th>Date</th>
       </tr>
     </thead>
@@ -41,6 +42,7 @@
         <td>{{ result.score }}</td>
         <td>{{ result.correct_answers }}</td>
         <td>{{ result.total_questions }}</td>
+        <td>{{ result.student.phone_no }}</td>
         <td>{{ result.date_taken }}</td>
       </tr>
       {% endfor %}
