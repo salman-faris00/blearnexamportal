@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% load static %}
   <title>Dashboard</title>
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/png">
-
   <style>
     body {
       background: url("{% static 'images/register_image7.png' %}") no-repeat center center fixed;
@@ -105,14 +104,14 @@
         <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" style="height: 50px;">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation" >
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
         <div class="d-flex align-items-center gap-2 flex-wrap">
           <a href="https://wa.me/919917442288" target="_blank" class="btn btn-sm" style="background-color: #0070B9; color: white;">
-            <i class="fa-brands fa-whatsapp"></i> Help
+            <i class="fa-brands fa-whatsapp"></i> Connect
           </a>
           <a href="tel:+919917442288" class="btn btn-sm" style="background-color: #0070B9; color: white;">
             <i class="fa-solid fa-phone"></i> Call
@@ -157,16 +156,19 @@
           <ol>
             <li>The exam consists of 25 multiple-choice questions.</li>
             <li>You will have 30 minutes to complete the exam.</li>
-            <li>Switching tabs, minimizing browser, or leaving fullscreen is not allowed.</li>
-            <li>Your webcam and microphone will monitor your actions during the exam.</li>
+            <li>Switching tabs, minimizing the browser, or leaving fullscreen is not allowed. 
+            </li>
+            <li>Your webcam and microphone will monitor your actions during the exam,
+                <strong>Please turn on your camera and microphone; otherwise, the exam will not start.</strong>
+            </li>
             <li>Copying, pasting, and right-clicking are disabled during the exam.</li>
-            <li>Any violation may lead to auto-submission or disqualification.</li>
             <li>No external materials or assistance is allowed.</li>
+            <li><b> Any violation may lead to auto-submission or the exam will terminate automatically</b></li>
             <li>Ensure stable internet throughout the exam duration.</li>
           </ol>
           <div class="form-check mt-3">
-            <input class="form-check-input" type="checkbox" id="agreeCheckbox" style="background-color: #0d6efd75;">
-            <label class="form-check-label" for="agreeCheckbox" style="color: red;">
+            <input class="form-check-input" type="checkbox" id="agreeCheckbox">
+            <label class="form-check-label" for="agreeCheckbox">
               I have read and agree to all the above instructions.
             </label>
           </div>

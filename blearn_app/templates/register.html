@@ -1,18 +1,17 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <title>Online Exam Registration</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <script src="https://kit.fontawesome.com/a2e0a0c4fa.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/png">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/png">
+
   <style>
-    body,
-    html {
+    body, html {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -21,7 +20,7 @@
     }
 
     .container-fluid {
-
+      
       padding: 0;
       display: flex;
       flex-direction: row;
@@ -43,7 +42,7 @@
       height: auto;
       margin-bottom: 30px;
       border-radius: 10px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
     }
 
     .left-panel h1 {
@@ -125,7 +124,7 @@
       height: 45px;
       padding: 0.5rem 1rem;
       border-color: black;
-
+      
     }
 
     form .btn-primary {
@@ -143,35 +142,33 @@
       background: linear-gradient(45deg, #0056b3, #004399);
     }
 
-    .navbar {
+      .navbar {
       background-color: rgba(255, 255, 255, 0.95);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-
-    nav.navbar .navbar-brand img {
+ nav.navbar .navbar-brand img {
       height: 32px;
     }
 
     nav.navbar .btn {
       padding: 5px 15px;
-
+      
     }
 
 
-    .navbar-brand img {
-      height: 40px;
-    }
+        .navbar-brand img {
+            height: 40px;
+        }
 
 
-
+ 
 
     @media (max-width: 991.98px) {
-      .container-fluid1 {
+      .container-fluid {
         flex-direction: column;
       }
 
-      .left-panel,
-      .right-panel {
+      .left-panel, .right-panel {
         flex: unset;
         width: 100%;
         padding: 30px 20px;
@@ -182,8 +179,7 @@
         text-align: center;
       }
 
-      .left-panel p,
-      .left-panel h1 {
+      .left-panel p, .left-panel h1 {
         max-width: 100%;
       }
 
@@ -192,8 +188,7 @@
         margin-bottom: 20px;
       }
 
-      .left-panel .btn-orange,
-      .left-panel .btn-outline-light {
+      .left-panel .btn-orange, .left-panel .btn-outline-light {
         width: 100%;
         margin-bottom: 10px;
       }
@@ -203,143 +198,138 @@
         padding: 2rem 2rem;
       }
     }
-
-    #a {
-      height: 10px;
+    #a{
+        height: 10px;
     }
+   
+
   </style>
 
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: rgb(20, 20, 42);">
-    <div class="container-fluid px-0">
-      <a class="navbar-brand ms-3" href="#">
-        <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
-      </a>
-      <button class="navbar-toggler me-3" type="button" style="background-color: white; " data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent">
-        <span class="navbar-toggler-icon" ></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <div class="d-flex align-items-center gap-2 gap-lg-3 me-3">
-          <a href="{% url 'login' %}" class="px-4 py-2 btn" style="background-color: #0070B9; color: white;">Login</a>
-          <a href="https://wa.me/919917442288" target="_blank" class="px-4 py-2 btn"
-            style="background-color: #0070B9; color: white;">
-            <i class="fa-brands fa-whatsapp"></i> Connect us
-          </a>
-          <a href="tel:+919917442288" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
-            <i class="fa-solid fa-phone"></i> Call us
-          </a>
-        </div>
+  <div class="container-fluid px-0">
+    <a class="navbar-brand ms-3" href="#">
+      <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
+    </a>
+    <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <div class="d-flex align-items-center gap-2 gap-lg-3 me-3">
+        <a href="{% url 'login' %}" class="px-4 py-2 btn" style="background-color: #0070B9; color: white;">Login</a>
+        <a href="https://wa.me/919917442288" target="_blank" class="px-4 py-2 btn" style="background-color: #0070B9; color: white;">
+          <i class="fa-brands fa-whatsapp"></i> Connect us
+        </a>
+        <a href="tel:+919917442288" class="btn px-4 py-2" style="background-color: #0070B9; color: white;">
+          <i class="fa-solid fa-phone"></i> Call us
+        </a>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Main Container -->
-  <div class="container-fluid container-fluid1" >
+  <div class="container-fluid">
     <!-- Left Info Panel -->
     <div class="left-panel">
       <img src="{% static 'images/register_image8.png' %}" alt="Banner Image" />
-      <h1>Your journey to excellence <br> starts here <br /></h1>
+      <h1>Your journey to excellence <br> starts here  <br /></h1>
       <p>
-        Prove your potential — earn scholarships and work on real-world innovations! </p>
+Prove your potential — earn scholarships and work on real-world innovations!      </p>
 
 
       <div class="mt-4 d-flex flex-wrap gap-3">
-        <!-- Common style for all icons -->
-        <style>
-          .icon-circle {
-            background-color: #0d6efd;
-            /* Bootstrap primary */
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-          }
-        </style>
+  <!-- Common style for all icons -->
+  <style>
+    .icon-circle {
+      background-color: #0d6efd; /* Bootstrap primary */
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+  </style>
 
-        <!-- Whatsapp -->
-        <div class="icon-circle">
-          <a href="https://wa.me/919917442288" class="text-white">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-        </div>
+   <!-- Whatsapp -->
+  <div class="icon-circle">
+    <a href="https://wa.me/919917442288" class="text-white">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
 
-        <!-- Facebook -->
-        <div class="icon-circle">
-          <a href="https://www.facebook.com/profile.php?id=61576373965437&mibextid=wwXIfr&mibextid=wwXIfr"
-            class="text-white">
-            <i class="fa-brands fa-facebook"></i>
-          </a>
-        </div>
+  <!-- Facebook -->
+  <div class="icon-circle">
+    <a href="https://www.facebook.com/profile.php?id=61576373965437&mibextid=wwXIfr&mibextid=wwXIfr" class="text-white">
+      <i class="fa-brands fa-facebook"></i>
+    </a>
+  </div>
 
-        <!-- Youtube -->
-        <div class="icon-circle">
-          <a href="https://www.youtube.com/@BLearn-Academy" class="text-white">
-            <i class="fa-brands fa-youtube"></i>
-          </a>
-        </div>
+  <!-- Youtube -->
+  <div class="icon-circle">
+    <a href="https://www.youtube.com/@BLearn-Academy" class="text-white">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+  </div>
 
-        <!-- Instagram -->
-        <div class="icon-circle">
-          <a href="https://www.instagram.com/blearn_academy?igsh=dmhyeXdyc3dnN3Y4&utm_source=qr" class="text-white">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-        </div>
-      </div>
+  <!-- Instagram -->
+  <div class="icon-circle">
+    <a href="https://www.instagram.com/blearn_academy?igsh=dmhyeXdyc3dnN3Y4&utm_source=qr" class="text-white">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+  </div>
+</div>
 
 
 
 
 
-      <div class="mt-4 d-flex flex-wrap gap-3">
-        <!-- Common style for all icons -->
-        <style>
-          .icon-circle {
-            background-color: #0d6efd;
-            /* Bootstrap primary */
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-          }
-        </style>
-        <!-- Phone -->
-        <div class="icon-circle">
-          <a href="tel:+919917442288" class="text-white">
-            <i class="fas fa-phone"></i>
-          </a>
-        </div>
+<div class="mt-4 d-flex flex-wrap gap-3">
+  <!-- Common style for all icons -->
+  <style>
+    .icon-circle {
+      background-color: #0d6efd; /* Bootstrap primary */
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+  </style>
+<!-- Phone -->
+  <div class="icon-circle">
+    <a href="tel:+919917442288" class="text-white">
+      <i class="fas fa-phone"></i>
+    </a>
+  </div>
 
-        <!-- Email -->
-        <div class="icon-circle">
-          <a href="mailto:enquiry@blearnonline.com" class="text-white">
-            <i class="fa-solid fa-envelope"></i>
-          </a>
-        </div>
+  <!-- Email -->
+  <div class="icon-circle">
+    <a href="mailto:enquiry@blearnonline.com" class="text-white">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+  </div>
 
-        <!-- Location -->
-        <div class="icon-circle">
-          <a href="https://www.google.com/maps/dir//1,+100+Feet+Ring+Road,+9th+Main+Rd,+near+BTM,+BTM+1st+Stage,+Bengaluru,+Karnataka+560076/@12.9135781,77.5221927,30051m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3bae15aae192099f:0xb2034499f61b5b79!2m2!1d77.6042061!2d12.9168411?entry=ttu&g_ep=EgoyMDI1MDUxNS4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"
-            class="text-white">
-            <i class="fa-solid fa-location-dot"></i>
-          </a>
-        </div>
+  <!-- Location -->
+  <div class="icon-circle">
+    <a href="https://www.google.com/maps/dir//1,+100+Feet+Ring+Road,+9th+Main+Rd,+near+BTM,+BTM+1st+Stage,+Bengaluru,+Karnataka+560076/@12.9135781,77.5221927,30051m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3bae15aae192099f:0xb2034499f61b5b79!2m2!1d77.6042061!2d12.9168411?entry=ttu&g_ep=EgoyMDI1MDUxNS4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" class="text-white">
+      <i class="fa-solid fa-location-dot"></i>
+    </a>
+  </div>
 
-
-        <!-- Website -->
-        <div class="icon-circle">
-          <a href="https://blearnacademy.com/" class="text-white">
-            <i class="fa-solid fa-globe"></i>
-          </a>
-        </div>
-      </div>
+ 
+  <!-- Website -->
+  <div class="icon-circle">
+    <a href="https://blearnacademy.com/" class="text-white">
+      <i class="fa-solid fa-globe"></i>
+    </a>
+  </div>
+</div>
 
 
 
@@ -353,164 +343,115 @@
     <!-- Right Registration Form -->
     <div class="right-panel">
       <div class="form-container">
-        <div class="text-center ">
-          <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40" />
-          <h2 class="mt-2">Student Registration</h2>
-        </div>
-        {% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-danger" role="alert">
-      {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
+        <div class="text-center mb-3">
+          <!-- Logo row -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <!-- Left logo -->
+            <div style="width: 150px; height: 50px;">
+              <img src="{% static 'images/Bsoft Logo.png' %}" alt="Left Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+
+            <!-- Right logo -->
+            <div style="width: 150px; height: 50px;">
+              <img src="{% static 'images/blearn_logo.png' %}" alt="Right Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </div>
+
+  <!-- Heading below logos -->
+  <h2 class="mt-2 fw-bold">Student Registration</h2>
+</div>
 
 
-        <form method="POST" action="{% url 'register' %}" novalidate id="registrationForm">
+
+
+        <form method="POST" action="{% url 'register' %}" novalidate>
           {% csrf_token %}
 
-          <!-- Email -->
-          <div>
-            <input type="email" name="email" class="form-control" id="email" placeholder="Enter your Email here"
-              required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="emailError">Please enter a valid email.</div>
+
+
+          <div class="">
+            <input type="text" name="name" class="form-control" style="margin-bottom: 20px;" id="name" placeholder="Your Full Name" required>
+            <!-- <label for="name">Full Name</label> -->
+            <div class="invalid-feedback">Please enter your name.</div>
           </div>
 
-          <!-- Password -->
-          <div>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required
-              minlength="6" style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="passwordError">Password must be at least 6 characters.</div>
+          <div >
+            <input type="email" style="margin-bottom: 20px;" name="email" class="form-control" id="Email" placeholder="Enter your Email here " required>
+            
+            <div class="invalid-feedback">Please enter a valid email.</div>
           </div>
 
-          <!-- Confirm Password -->
-          <div>
-            <input type="password" name="confirm_password" class="form-control" id="confirm_password"
-              placeholder="Confirm Password" required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="confirmPasswordError">Passwords do not match.</div>
+          <div class="">
+            <input type="password" name="password" style="margin-bottom: 20px;" class="form-control" id="password" placeholder="Password" required minlength="6">
+            <!-- <label for="password">Create Password</label> -->
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
           </div>
 
-          <!-- Full Name -->
-          <div>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Full Name" required
-              style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="nameError">Please enter your name.</div>
+          <div class="">
+            <input type="password" name="confirm_password" style="margin-bottom: 20px;" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+            <!-- <label for="confirm_password">Confirm Password</label> -->
+            <div class="invalid-feedback">Passwords do not match.</div>
           </div>
 
-          <!-- Phone -->
-          <div>
-            <input type="tel" name="phone_no" class="form-control" id="phone" placeholder="Your Mobile Number"
-              pattern="[0-9]{10}" required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="phoneError">Please enter a 10-digit phone number.</div>
+          
+
+          <div class="">
+            <input type="tel" name="phone_no" class="form-control" style="margin-bottom: 20px;" id="phone" placeholder="Your Mobile Number" pattern="[0-9]{10}" required>
+            <!-- <label for="phone">Phone Number</label> -->
+            <!-- <div class="form-text">Enter 10-digit phone number.</div> -->
+            <div class="invalid-feedback">Please enter a valid phone number.</div>
           </div>
 
-          <!-- Qualification -->
-          <div>
-            <input type="text" name="qualification" class="form-control" id="qualification" placeholder="Qualification"
-              required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="qualificationError">Please enter your qualification.</div>
+          <div class="">
+            <input type="text" name="qualification" style="margin-bottom: 20px;" class="form-control" id="qualification" placeholder="Qualification" required>
+            <!-- <label for="qualification">Qualification</label> -->
+            <div class="invalid-feedback">Please enter your qualification.</div>
           </div>
 
-          <!-- Department -->
-          <div>
-            <input type="text" name="department" class="form-control" id="department" placeholder="Department/Branch"
-              required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="departmentError">Please enter your department.</div>
+          <div class="">
+            <input type="text" name="department" style="margin-bottom: 20px;" class="form-control" id="department" placeholder="Department/Branch" required>
+            <!-- <label for="department">Department</label> -->
+            <div class="invalid-feedback">Please enter your department.</div>
+          </div>
+          <div class="">
+            <select name="year" class="form-control" style="margin-bottom: 20px;" required>
+              <option value="" disabled selected>Select Year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+            <div class="invalid-feedback">Please select your year.</div>
           </div>
 
-          <!-- College -->
-          <div>
-            <input type="text" name="college" class="form-control" id="college" placeholder="College/University/Company"
-              required style="margin-bottom: 5px;">
-            <div class="invalid-feedback" id="collegeError">Please enter your college name.</div>
+          <div class="">
+            <input type="text" name="college" style="margin-bottom: 20px;" class="form-control" id="college" placeholder="College/University/Company" required>
+            <!-- <label for="college">College/University</label> -->
+            <div class="invalid-feedback">Please enter your college name.</div>
           </div>
+          
 
-          <!-- Submit Button -->
-          <div class="d-grid mt-2">
-            <button type="submit" class="btn btn-primary btn-sm" id="registerBtn" disabled>Register</button>
+
+          <div class="d-grid">
+            <button type="submit" class="btn  btn-sm" style="background-color: #0070B9; color: white;">Register</button>
           </div>
+          {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
         </form>
       </div>
     </div>
   </div>
 
-  <script>
-    const form = document.getElementById("registrationForm");
-    const registerBtn = document.getElementById("registerBtn");
-
-    const fields = {
-      email: {
-        element: document.getElementById("email"),
-        error: document.getElementById("emailError"),
-        validate: () => fields.email.element.validity.valid
-      },
-      password: {
-        element: document.getElementById("password"),
-        error: document.getElementById("passwordError"),
-        validate: () => fields.password.element.value.length >= 6
-      },
-      confirm_password: {
-        element: document.getElementById("confirm_password"),
-        error: document.getElementById("confirmPasswordError"),
-        validate: () => fields.confirm_password.element.value === fields.password.element.value && fields.confirm_password.element.value !== ""
-      },
-      name: {
-        element: document.getElementById("name"),
-        error: document.getElementById("nameError"),
-        validate: () => fields.name.element.validity.valid
-      },
-      phone: {
-        element: document.getElementById("phone"),
-        error: document.getElementById("phoneError"),
-        validate: () => /^[0-9]{10}$/.test(fields.phone.element.value)
-      },
-      qualification: {
-        element: document.getElementById("qualification"),
-        error: document.getElementById("qualificationError"),
-        validate: () => fields.qualification.element.validity.valid
-      },
-      department: {
-        element: document.getElementById("department"),
-        error: document.getElementById("departmentError"),
-        validate: () => fields.department.element.validity.valid
-      },
-      college: {
-        element: document.getElementById("college"),
-        error: document.getElementById("collegeError"),
-        validate: () => fields.college.element.validity.valid
-      }
-    };
-
-    function validateField(field) {
-      if (field.validate()) {
-        field.error.style.display = "none";
-        field.element.classList.remove("is-invalid");
-        field.element.classList.add("is-valid");
-      } else {
-        field.error.style.display = "block";
-        field.element.classList.remove("is-valid");
-        field.element.classList.add("is-invalid");
-      }
-    }
-
-    function validateForm() {
-      let allValid = true;
-      for (let key in fields) {
-        validateField(fields[key]);
-        if (!fields[key].validate()) allValid = false;
-      }
-      registerBtn.disabled = !allValid;
-    }
-
-    // Add listeners
-    for (let key in fields) {
-      fields[key].element.addEventListener("input", validateForm);
-      fields[key].element.addEventListener("blur", validateForm); // Show errors on blur too
-    }
-  </script>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

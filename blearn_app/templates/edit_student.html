@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Student</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Edit Student</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row mb-3">
+      <div class="col">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ student.Name }}" class="form-control" required>
+      </div>
+      <div class="col">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ student.Email }}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label>Phone</label>
+        <input type="text" name="phone_no" value="{{ student.phone_no }}" class="form-control" required>
+      </div>
+      <div class="col">
+        <label>Qualification</label>
+        <input type="text" name="qualification" value="{{ student.qualification }}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label>Department</label>
+        <input type="text" name="department" value="{{ student.department }}" class="form-control" required>
+      </div>
+      <div class="col">
+        <label>College</label>
+        <input type="text" name="college" value="{{ student.college }}" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label>Password</label>
+        <input type="text" name="password" value="{{ student.Password }}" class="form-control" required>
+      </div>
+      <div class="col">
+        <label>Year</label>
+        <select name="year" class="form-select" required>
+          <option value="">Select Year</option>
+          {% for value, label in year_choices %}
+            <option value="{{ value }}" {% if student.year == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="text-end">
+      <a href="{% url 'view_students' %}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-success">Update</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

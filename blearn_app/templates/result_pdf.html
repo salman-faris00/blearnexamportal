@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% load static %}
   <meta charset="UTF-8">
+  {% load static %}
+  <title>BLearn Academy</title>
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
   <style>
     table {
       width: 100%;
@@ -30,7 +32,6 @@
         <th>Score</th>
         <th>Correct Answers</th>
         <th>Total Questions</th>
-        <th>Contact Number</th>
         <th>Date</th>
       </tr>
     </thead>
@@ -42,7 +43,6 @@
         <td>{{ result.score }}</td>
         <td>{{ result.correct_answers }}</td>
         <td>{{ result.total_questions }}</td>
-        <td>{{ result.student.phone_no }}</td>
         <td>{{ result.date_taken }}</td>
       </tr>
       {% endfor %}

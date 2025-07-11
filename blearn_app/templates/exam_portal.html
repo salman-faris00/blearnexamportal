@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   {% load static %}
   <title>Exam Portal</title>
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
-    <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/png">
-
   <style>
     body { user-select: none; }
     .question-card { display: none; }
@@ -78,7 +77,8 @@
     <div class="alert alert-info text-center" id="timer">Time Left: 30:00</div>
 
     <!-- Exam Form -->
-    <form id="examForm" method="POST" action="{% url 'submit_exam' %}">
+<form id="examForm" method="POST" action="{% url 'submit_exam' %}" enctype="multipart/form-data">
+
       {% csrf_token %}
       <div id="questions-container">
         {% for q in questions %}
@@ -122,7 +122,7 @@
         </div>
         <div class="modal-body" id="warningMessage"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          <button type="button" class="btn " data-bs-dismiss="modal" style="background-color: #0070B9; color: white;">OK</button>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
+  <!-- <script>
     const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
     const warningMsgEl = document.getElementById('warningMessage');
     let violations = 0, terminated = false;
@@ -228,7 +228,6 @@
       try {
         vid.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
       } catch (e) {
-        console.log("Webcam error:", e);
         showWarning('Webcam access required.');
         document.getElementById('next-btn').disabled = true;
         return;
@@ -285,8 +284,281 @@
       }, 5000);
     }
 
+
+
+
+    
+
     startFace();
     startAudio();
-  </script>
+
+    
+  </script> -->
+
+
+
+
+
+
+
+
+
+
+<script>
+  const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+  const warningMsgEl = document.getElementById('warningMessage');
+  let violations = 0, terminated = false;
+  const MAX = 4;
+  // let mediaRecorder;
+  // let recordedChunks = [];
+
+  function showWarning(msg, callback) {
+    warningMsgEl.textContent = msg;
+    warningModal.show();
+    if (callback) {
+      document.getElementById('warningModal').addEventListener('hidden.bs.modal', callback, { once: true });
+    }
+  }
+
+  function handleViolation(reason) {
+    if (terminated) return;
+    violations++;
+    showWarning(`${reason} detected! Warning`, () => {
+      if (violations >= MAX) {
+        terminated = true;
+        showWarning('Exam terminated due to repeated violations.', () => {
+          stopRecordingAndSubmit();
+        });
+      }
+    });
+  }
+
+  function stopRecordingAndSubmit() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.onstop = function () {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const formData = new FormData();
+        formData.append('recording', blob, 'recording.webm');
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        fetch("{% url 'save_recording' %}", {
+          method: 'POST',
+          body: formData
+        }).then(response => {
+          console.log('Recording saved');
+          document.getElementById('examForm').submit();
+        }).catch(() => {
+          console.error('Failed to save recording');
+          document.getElementById('examForm').submit();
+        });
+      };
+      mediaRecorder.stop();
+    } else {
+      document.getElementById('examForm').submit();
+    }
+  }
+
+  // Tab/blur violation detection
+  let visCD = false, blurCD = false;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !visCD) {
+      visCD = true;
+      handleViolation('Tab switch');
+      setTimeout(() => visCD = false, 10000);
+    }
+  });
+
+  window.addEventListener('blur', () => {
+    if (!blurCD) {
+      blurCD = true;
+      handleViolation('Window out of focus');
+      setTimeout(() => blurCD = false, 10000);
+    }
+  });
+
+  // Question navigation
+  const cards = document.querySelectorAll('.question-card');
+  let current = 0;
+
+  function showQuestion(i) {
+    cards.forEach(c => c.style.display = 'none');
+    cards[i].style.display = 'block';
+    const btn = document.getElementById('next-btn');
+    if (i === cards.length - 1) {
+      btn.textContent = 'Submit Exam';
+      btn.type = 'submit';
+    } else {
+      btn.textContent = 'Next';
+      btn.type = 'button';
+    }
+  }
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    const inputs = cards[current].querySelectorAll('input[type=radio]');
+    if (![...inputs].some(i => i.checked)) {
+      showWarning('Please select an option to proceed.');
+      return;
+    }
+    current++;
+    showQuestion(current);
+  });
+
+  showQuestion(0);
+
+  // Timer
+  (function () {
+    let sec = 30 * 60, timer = document.getElementById('timer');
+    setInterval(() => {
+      if (terminated) return;
+      let m = Math.floor(sec / 60), s = sec % 60;
+      timer.textContent = `Time Left: ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      if (--sec < 0) {
+        terminated = true;
+        showWarning("Time's up! Submitting your exam.", () => {
+          stopRecordingAndSubmit();
+        });
+      }
+    }, 1000);
+  })();
+
+  // Face Detection
+  async function startFace() {
+    const model = await blazeface.load();
+    const vid = document.getElementById('webcam');
+    let faceCD = false;
+
+    try {
+      vid.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
+    } catch (e) {
+      showWarning('Webcam access required.');
+      document.getElementById('next-btn').disabled = true;
+      return;
+    }
+
+    setInterval(async () => {
+      if (terminated) return;
+      const preds = await model.estimateFaces(vid, false);
+      document.getElementById('face-status').textContent = preds.length ? '' : 'Face not detected!';
+      if (!preds.length && !faceCD) {
+        faceCD = true;
+        handleViolation('No face detected');
+        setTimeout(() => faceCD = false, 10000);
+      }
+    }, 5000);
+  }
+
+  // Audio Detection
+  async function startAudio() {
+    let audioCtx, analyser, data, audioCD = false;
+    document.body.addEventListener('click', () => {
+      if (audioCtx?.state === 'suspended') audioCtx.resume();
+    }, { once: true });
+
+    try {
+      const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioCtx = new AudioContext();
+      const src = audioCtx.createMediaStreamSource(mic);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      src.connect(analyser);
+      data = new Uint8Array(analyser.fftSize);
+    } catch (e) {
+      showWarning('Microphone access required.');
+      document.getElementById('next-btn').disabled = true;
+      return;
+    }
+
+    setInterval(() => {
+      if (terminated) return;
+      analyser.getByteTimeDomainData(data);
+      let sum = 0;
+      for (let v of data) {
+        let x = (v - 128) / 128;
+        sum += x * x;
+      }
+      let rms = Math.sqrt(sum / data.length);
+      document.getElementById('audio-status').textContent = rms > 0.05 ? 'Background voice detected!' : '';
+      if (rms > 0.05 && !audioCD) {
+        audioCD = true;
+        handleViolation('Audio detected');
+        setTimeout(() => audioCD = false, 10000);
+      }
+    }, 5000);
+  }
+
+  // Start face/audio monitoring
+  startFace();
+  startAudio();
+
+  // Screen Recording
+  let mediaRecorder;
+  let recordedChunks = [];
+
+  function stopRecordingAndSubmit() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.onstop = function () {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const file = new File([blob], 'recording.webm', { type: 'video/webm' });
+
+        // Create file input dynamically
+        const videoInput = document.createElement('input');
+        videoInput.type = 'file';
+        videoInput.name = 'video';
+        videoInput.files = createFileList(file);
+        videoInput.style.display = 'none';
+
+        document.getElementById('examForm').appendChild(videoInput);
+        document.getElementById('examForm').submit();
+      };
+      mediaRecorder.stop();
+    } else {
+      document.getElementById('examForm').submit();
+    }
+  }
+
+  function createFileList(file) {
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    return dataTransfer.files;
+  }
+
+  // Override form submit to attach video
+  document.getElementById('examForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    stopRecordingAndSubmit();
+  });
+
+  // Start screen recording
+  async function startScreenRecording() {
+  try {
+    const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    const combinedStream = new MediaStream();
+
+    // Add screen video
+    screenStream.getVideoTracks().forEach(track => combinedStream.addTrack(track));
+
+    // Add microphone audio
+    audioStream.getAudioTracks().forEach(track => combinedStream.addTrack(track));
+
+    mediaRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm' });
+
+    mediaRecorder.ondataavailable = function (e) {
+      if (e.data.size > 0) {
+        recordedChunks.push(e.data);
+      }
+    };
+
+    mediaRecorder.start();
+  } catch (err) {
+    console.error('Recording error:', err);
+    alert("Screen + microphone recording permission denied!");
+  }
+}
+startScreenRecording();
+
+</script>
+
 </body>
 </html>

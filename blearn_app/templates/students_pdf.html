@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: auto; /* ✅ Let browser size columns based on content */
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 6px;
+            text-align: left;
+            white-space: nowrap; /* ✅ Prevent breaking lines */
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registered Students</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Password</th>
+                <th>Qualification</th>
+                <th>Department</th>
+                <th>College</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stu in students %}
+            <tr>
+                <td>{{ stu.Name }}</td>
+                <td>{{ stu.Email }}</td>
+                <td>{{ stu.phone_no }}</td>
+                <td>{{ stu.Password }}</td>
+                <td>{{ stu.qualification }}</td>
+                <td>{{ stu.department }}</td>
+                <td>{{ stu.college }}</td>
+                <td>{{ stu.year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
