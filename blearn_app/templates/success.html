@@ -77,13 +77,13 @@
 
         <!-- Buttons (no collapse on small screens) -->
         <div class="d-flex align-items-center gap-2 flex-wrap">
-            <a href="https://wa.me/919917442288" target="_blank" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <a href="https://wa.me/919917442288" target="_blank" class="btn btn-primary btn-sm" style="color: white;">
                 <i class="fa-brands fa-whatsapp"></i> Connect
             </a>
-            <a href="tel:+919917442288" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <a href="tel:+919917442288" class="btn btn-primary btn-sm" style="color: white;">
                 <i class="fa-solid fa-phone"></i> Call
             </a>
-            <a href="{% url 'logout' %}" class="btn btn-sm" style="background-color: #0070B9; color: white;">
+            <a href="{% url 'logout' %}" class="btn btn-primary btn-sm" style=" color: white;">
                 <i class="fa-solid fa-power-off"></i> Logout
             </a>
         </div>
@@ -96,7 +96,7 @@
         <div class="success-icon">✅</div>
         <h2 class="mb-3">Registration Successful!</h2>
         <p class="text-muted">The student has been registered successfully.</p>
-        <a href="{% url 'login' %}" class="btn mt-4" style="background-color: #0070B9; color: white;">Start exam</a>
+        <a href="{% url 'login' %}" class="btn btn-primary mt-4" style=" color: white;">Start exam</a>
     </div>
 </div>
 
