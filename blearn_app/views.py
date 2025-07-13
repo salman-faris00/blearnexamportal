@@ -29,14 +29,25 @@ def registration_page(request):
 
 def register_student(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        name = request.POST.get('name')
-        phone_no = request.POST.get('phone_no')
-        qualification = request.POST.get('qualification')
-        department = request.POST.get('department')
-        college = request.POST.get('college')
-        year = request.POST.get('year')  # 🔹 Get year from the form
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+        confirm_password = request.POST.get('confirm_password', '').strip()
+        name = request.POST.get('name', '').strip()
+        phone_no = request.POST.get('phone_no', '').strip()
+        qualification = request.POST.get('qualification', '').strip()
+        department = request.POST.get('department', '').strip()
+        college = request.POST.get('college', '').strip()
+        year = request.POST.get('year', '').strip()
+
+        # Check if any required field is empty
+        if not all([email, password, confirm_password, name, phone_no, qualification, department, college, year]):
+            messages.error(request, 'All fields are required.')
+            return render(request, 'register.html')
+
+        # Check if passwords match
+        if password != confirm_password:
+            messages.error(request, 'Passwords do not match.')
+            return render(request, 'register.html')
 
         # Check if email already exists
         if student.objects.filter(Email=email).exists():
@@ -57,7 +68,7 @@ def register_student(request):
             qualification=qualification,
             department=department,
             college=college,
-            year=year  # 🔹 Save year value
+            year=year
         )
 
         return redirect('success')
