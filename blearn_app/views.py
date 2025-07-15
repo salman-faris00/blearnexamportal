@@ -197,7 +197,7 @@ def success_page(request):
 
 def login_student(request):
     if request.method == 'POST':
-        email = request.POST.get('email', '').strip()
+        email = request.POST.get('email','').strip()
         password = request.POST.get('password', '')
 
         try:
@@ -309,7 +309,9 @@ def send_login_otp_html(name, email, otp):
     from_email = "youremail@example.com"
 
     # Mask the email: show only last 4 characters
-    masked_email = '*' * (len(email) - 16) + email[-16:]
+    first_letter = email[0]
+    last_three = email[-13:]
+    masked_email = first_letter + '*' * (len(email) - 14) + last_three
 
     html_content = f"""
     <div style="max-width:600px; margin:auto; font-family:Arial, sans-serif; border:1px solid #ddd; padding:20px; border-radius:10px;">
@@ -352,6 +354,7 @@ def dashboard(request):
         return render(request, 'dashboard.html', {'name': name})
     else:
         return redirect('login')
+
 
 def logout_student(request):
     request.session.flush()  # This will clear all session data
