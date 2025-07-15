@@ -216,10 +216,10 @@
     <a class="navbar-brand ms-3" href="#">
       <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
     </a>
-    <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+    <!-- <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    </button> -->
+    <div class="  justify-content-end" id="navbarSupportedContent">
       <div class="d-flex align-items-center gap-2 gap-lg-3 me-3">
         <a href="{% url 'login' %}" class="px-4 py-2 btn btn-primary" style="color: white;">Login</a>
         <a href="https://wa.me/919917442288" target="_blank" class="px-4 py-2 btn btn-primary" style="color: white;">
@@ -410,6 +410,21 @@ Prove your potential — earn scholarships and work on real-world innovations!  
             <div class="invalid-feedback">Please enter a valid phone number.</div>
           </div>
 
+
+
+          <!-- Gender Selection -->
+          <div class="">
+            <select name="gender" class="form-control" style="margin-bottom: 20px;" required>
+              <option value="" disabled selected>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="invalid-feedback">Please select your gender.</div>
+          </div>
+
+
+
           <div class="">
             <input type="text" name="qualification" style="margin-bottom: 20px;" class="form-control" id="qualification" placeholder="Qualification" required>
             <!-- <label for="qualification">Qualification</label> -->
@@ -436,18 +451,16 @@ Prove your potential — earn scholarships and work on real-world innovations!  
         </div>
 
       
-        <!-- Gender Selection -->
-        <div class="">
-          <select name="gender" class="form-control" style="margin-bottom: 20px;" required>
-            <option value="" disabled selected>Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-          <div class="invalid-feedback">Please select your gender.</div>
-        </div>
+        
+         
 
-          <!-- Interested Course Selection -->
+          <div class="">
+            <input type="text" name="college" style="margin-bottom: 20px;" class="form-control" id="college" placeholder="College/University/Company" required>
+            <!-- <label for="college">College/University</label> -->
+            <div class="invalid-feedback">Please enter your college name.</div>
+          </div>
+          
+           <!-- Interested Course Selection -->
           <div class="">
             <select name="interested_course" class="form-control" style="margin-bottom: 20px;" required>
               <option value="" disabled selected>Select Interested Course</option>
@@ -466,14 +479,6 @@ Prove your potential — earn scholarships and work on real-world innovations!  
             </select>
             <div class="invalid-feedback">Please select your course of interest.</div>
           </div>
-
-
-          <div class="">
-            <input type="text" name="college" style="margin-bottom: 20px;" class="form-control" id="college" placeholder="College/University/Company" required>
-            <!-- <label for="college">College/University</label> -->
-            <div class="invalid-feedback">Please enter your college name.</div>
-          </div>
-          
 
 
           <div class="d-grid">
