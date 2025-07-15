@@ -12,15 +12,22 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
-      background: url("{% static 'images/dashboard_bg_image.png' %}") no-repeat center center fixed;
+      /* background: url("{% static 'images/dashboard_bg_image2.png' %}") no-repeat center center fixed; */
+     
+
+
+      background: 
+      url("{% static 'images/dashboard_bg_image2.png' %}")  fixed;
+
       background-size: cover;
       min-height: 100vh;
       font-family: 'Segoe UI', sans-serif;
+      background-color: beige;
     }
 
     .btn-custom {
       background-color: #3498db;
-      color: white;
+      color: rgb(208, 208, 208);
     }
 
     .btn-custom:disabled,
@@ -54,17 +61,18 @@
     }
 
     .exam-box {
-      background: rgba(2, 57, 139, 0.3); /* transparent blue */
+      background: rgb(255, 255, 255,0.9rem);
+      /* border: 2px solid #00ffff; */
       border: 2px solid #0d6efd;
       border-radius: 15px;
       padding: 30px;
       margin: 50px auto;
+      /* box-shadow: 0 0 20px #00ffff, 0 0 40px #005f5f inset; */
       box-shadow: 0 0 20px #0d6efd, 0 0 40px #0d6efd inset;
-      text-align: center;
-      color: #ffffff;
-      max-width: 600px; /* You can adjust this width */
-    }
 
+      text-align: center;
+      align-self: center;color: #ffffff;
+    }
 
     @media (max-width: 576px) {
       .exam-box {
@@ -73,17 +81,21 @@
     }
 
     .start-btn {
-      background: linear-gradient(145deg, rgb(20, 20, 42), rgb(20, 20, 42));
+      /* background: linear-gradient(145deg, #00ffff, #005f5f); */
+      /* background: linear-gradient(145deg, rgb(20, 20, 42), rgb(20, 20, 42)); */
+      
       color: white;
       border: none;
       padding: 12px 30px;
       border-radius: 10px;
-      
+      /* color: #000; */
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 10px #000;
+      /* box-shadow: 0 0 10px #00ffff; */
+      /* box-shadow: 0 0 10px #000; */
       transition: all 0.3s ease;
+      
     }
 
     .start-btn:hover {
@@ -96,30 +108,31 @@
         padding: 6px 10px;
       }
     }
+
+    .nv{
+        background: rgb(255, 255, 255,0.9rem); 
+    }
   </style>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(20, 20, 42);">
+  
+  <nav class="navbar navbar-expand-lg navbar-dark nv" >
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" style="height: 50px;">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+     
 
-      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+      <div class=" justify-content-end" id="navbarContent">
         <div class="d-flex align-items-center gap-2 flex-wrap">
-          <a href="https://wa.me/919917442288" target="_blank" class="btn btn-primary btn-sm" style="color: white;">
+          <a href="https://wa.me/919917442288" target="_blank" class="btn btn-sm" style="background-color: #0070B9; color: white;">
             <i class="fa-brands fa-whatsapp"></i> Connect
           </a>
-          <a href="tel:+919917442288" class="btn btn-primary btn-sm" style=" color: white;">
+          <a href="tel:+919917442288" class="btn btn-sm" style="background-color: #0070B9; color: white;">
             <i class="fa-solid fa-phone"></i> Call
           </a>
-          <a href="{% url 'logout' %}" class="btn btn-primary btn-sm" style=" color: white;">
+          <a href="{% url 'logout' %}" class="btn btn-sm" style="background-color: #0070B9; color: white;">
             <i class="fa-solid fa-power-off"></i> Logout
           </a>
         </div>
@@ -136,17 +149,15 @@
     </h1>
   </div> -->
 
+  <br><br><br>  <br><br>
   <!-- Exam Box -->
-  <div class="container">
-  <div class="exam-box mx-auto mt-4">
-
-      <h2>Welcome {{ name }}!</h2>
-      <h2 class="mb-4">Ready to Begin?</h2>
-      <button class="start-btn" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+  <div style="margin-left: 80px;">
+      <h1 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Welcome {{ name }}!</h1>
+      <h2 class="mb-4" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">Ready to Begin?</h2>
+      <button class="start-btn " style="background-color: #0070B9;" data-bs-toggle="modal" data-bs-target="#instructionsModal">
         Start Exam
       </button>
-    </div>
-  </div>
+</div>
 
   <!-- Instructions Modal -->
   <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
