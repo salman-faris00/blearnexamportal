@@ -27,8 +27,106 @@ otp_storage = {}
 def registration_page(request):
     return render(request,"register.html")
 
+# def register_student(request):
+#     if request.method == 'POST':
+#         email = request.POST.get('email', '').strip()
+#         password = request.POST.get('password', '').strip()
+#         confirm_password = request.POST.get('confirm_password', '').strip()
+#         name = request.POST.get('name', '').strip()
+#         phone_no = request.POST.get('phone_no', '').strip()
+#         qualification = request.POST.get('qualification', '').strip()
+#         department = request.POST.get('department', '').strip()
+#         college = request.POST.get('college', '').strip()
+#         year = request.POST.get('year', '').strip()
+#         gender = request.POST.get('gender', '').strip()
+#         interested_course = request.POST.get('interested_course', '').strip()
+
+#         # Check if any required field is empty
+#         if not all([
+#             email, password, confirm_password, name, phone_no,
+#             qualification, department, college, year, gender, interested_course
+#         ]):
+#             messages.error(request, 'All fields are required.')
+#             return render(request, 'register.html')
+
+#         # Check if passwords match
+#         if password != confirm_password:
+#             messages.error(request, 'Passwords do not match.')
+#             return render(request, 'register.html')
+
+#         # Check if email already exists
+#         if student.objects.filter(Email=email).exists():
+#             messages.error(request, 'Email already registered.')
+#             return render(request, 'register.html')
+
+#         # Check if phone number already exists
+#         if student.objects.filter(phone_no=phone_no).exists():
+#             messages.error(request, 'Phone number already registered.')
+#             return render(request, 'register.html')
+
+#         # Save to database
+#         student.objects.create(
+#             Email=email,
+#             Password=password,
+#             Name=name,
+#             phone_no=phone_no,
+#             qualification=qualification,
+#             department=department,
+#             college=college,
+#             year=year,
+#             gender=gender,
+#             interested_course=interested_course,
+#         )
+
+#         return redirect('success_page')
+
+#     return render(request, 'register.html')
+
+
+
+
+
 def register_student(request):
     if request.method == 'POST':
+        # Step 1: If this is the OTP submission step
+        if 'otp' in request.POST:
+            entered_otp = request.POST.get('otp')
+            stored_otp = request.session.get('register_otp')
+            if entered_otp == stored_otp:
+                # Retrieve user data from session and save student
+                student_data = request.session.get('register_data', {})
+                if not student_data:
+                    messages.error(request, "Session expired. Please register again.")
+                    return redirect('register')
+
+                if student.objects.filter(Email=student_data['email']).exists():
+                    messages.error(request, 'Email already registered.')
+                    return redirect('register')
+
+                if student.objects.filter(phone_no=student_data['phone_no']).exists():
+                    messages.error(request, 'Phone number already registered.')
+                    return redirect('register')
+
+                student.objects.create(
+                    Email=student_data['email'],
+                    Password=student_data['password'],
+                    Name=student_data['name'],
+                    phone_no=student_data['phone_no'],
+                    qualification=student_data['qualification'],
+                    department=student_data['department'],
+                    college=student_data['college'],
+                    year=student_data['year'],
+                    gender=student_data['gender'],
+                    interested_course=student_data['interested_course'],
+                )
+
+                request.session.pop('register_data', None)
+                request.session.pop('register_otp', None)
+                return redirect('success')
+            else:
+                return render(request, 'verify_register_otp.html', {'error': 'Invalid OTP'})
+
+        # Step 2: Initial form submission
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '').strip()
         confirm_password = request.POST.get('confirm_password', '').strip()
@@ -41,46 +139,37 @@ def register_student(request):
         gender = request.POST.get('gender', '').strip()
         interested_course = request.POST.get('interested_course', '').strip()
 
-        # Check if any required field is empty
-        if not all([
-            email, password, confirm_password, name, phone_no,
-            qualification, department, college, year, gender, interested_course
-        ]):
+        if not all([email, password, confirm_password, name, phone_no, qualification, department, college, year, gender, interested_course]):
             messages.error(request, 'All fields are required.')
             return render(request, 'register.html')
 
-        # Check if passwords match
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
             return render(request, 'register.html')
 
-        # Check if email already exists
-        if student.objects.filter(Email=email).exists():
-            messages.error(request, 'Email already registered.')
-            return render(request, 'register.html')
+        # Send OTP
+        otp = str(random.randint(100000, 999999))
+        request.session['register_otp'] = otp
+        request.session['register_data'] = {
+            'email': email,
+            'password': password,
+            'name': name,
+            'phone_no': phone_no,
+            'qualification': qualification,
+            'department': department,
+            'college': college,
+            'year': year,
+            'gender': gender,
+            'interested_course': interested_course,
+        }
 
-        # Check if phone number already exists
-        if student.objects.filter(phone_no=phone_no).exists():
-            messages.error(request, 'Phone number already registered.')
-            return render(request, 'register.html')
+        send_login_otp_html(name, email, otp)
 
-        # Save to database
-        student.objects.create(
-            Email=email,
-            Password=password,
-            Name=name,
-            phone_no=phone_no,
-            qualification=qualification,
-            department=department,
-            college=college,
-            year=year,
-            gender=gender,
-            interested_course=interested_course,
-        )
-
-        return redirect('success_page')
+        return render(request, 'verify_register_otp.html', {'email': email})
 
     return render(request, 'register.html')
+
+
 
 def success_page(request):
     return render(request, 'success.html')
@@ -106,7 +195,6 @@ def success_page(request):
 
 
 
-
 def login_student(request):
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
@@ -115,22 +203,45 @@ def login_student(request):
         try:
             student_obj = student.objects.get(Email=email)
             if password == student_obj.Password:
-                otp = str(random.randint(100000, 999999))
-
-                request.session['otp_email'] = email
-                request.session['otp_code'] = otp
-                request.session['otp_timestamp'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-                # Send OTP via HTML email
-                send_login_otp_html(student_obj.Name, email, otp)
-
-                return redirect('verify_login_otp')
+                request.session['student_id'] = student_obj.id
+                request.session['student_name'] = student_obj.Name
+                return redirect('dashboard')
             else:
                 return render(request, 'login.html', {'error': 'Invalid Password'})
         except student.DoesNotExist:
             return render(request, 'login.html', {'error': 'Invalid Email'})
 
     return render(request, 'login.html')
+
+
+
+
+
+
+# def login_student(request):
+#     if request.method == 'POST':
+#         email = request.POST.get('email', '').strip()
+#         password = request.POST.get('password', '')
+
+#         try:
+#             student_obj = student.objects.get(Email=email)
+#             if password == student_obj.Password:
+#                 otp = str(random.randint(100000, 999999))
+
+#                 request.session['otp_email'] = email
+#                 request.session['otp_code'] = otp
+#                 request.session['otp_timestamp'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+#                 # Send OTP via HTML email
+#                 send_login_otp_html(student_obj.Name, email, otp)
+
+#                 return redirect('verify_login_otp')
+#             else:
+#                 return render(request, 'login.html', {'error': 'Invalid Password'})
+#         except student.DoesNotExist:
+#             return render(request, 'login.html', {'error': 'Invalid Email'})
+
+#     return render(request, 'login.html')
 
 
 def verify_login_otp(request):
