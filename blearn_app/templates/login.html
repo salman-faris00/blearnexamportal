@@ -200,6 +200,10 @@
                                 class="form-control" required />
                         </div>
 
+                         <div class="forgot-link">
+                            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+                        </div>
+
                         <button type="submit" class="btn-login" style="background-color: #0d6efd; color: white; width: 305px;">LOGIN</button>
 
                         {% if error %}
@@ -208,7 +212,7 @@
                     </form>
 
                     <div class="forgot-link">
-                        <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+                         Don't have an account ? <a href="{% url 'registration_page' %}">Sign up </a>
                     </div>
                 </section>
             </div>
