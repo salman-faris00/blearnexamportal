@@ -11,13 +11,40 @@ class student(models.Model):
     department = models.CharField(max_length=100)
     college = models.CharField(max_length=100)
 
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True)
+
     YEAR_CHOICES = [
         ('1st Year', '1st Year'),
         ('2nd Year', '2nd Year'),
         ('3rd Year', '3rd Year'),
         ('4th Year', '4th Year'),
+        ('Graduated', 'Graduated'),
+        ('Not Completed', 'Not Completed'),
     ]
-    year = models.CharField(max_length=20, choices=YEAR_CHOICES,null=True)
+    year = models.CharField(max_length=20, choices=YEAR_CHOICES, null=True)
+
+    
+
+    COURSE_CHOICES = [
+        ('Data Science', 'Data Science'),
+        ('Data Analytics', 'Data Analytics'),
+        ('Cloud Computing', 'Cloud Computing'),
+        ('Cyber Security', 'Cyber Security'),
+        ('Networking', 'Networking'),
+        ('Python Fullstack', 'Python Fullstack'),
+        ('MERN Stack', 'MERN Stack'),
+        ('Java Fullstack', 'Java Fullstack'),
+        ('Flutter', 'Flutter'),
+        ('Software Testing', 'Software Testing'),
+        ('DevOps', 'DevOps'),
+        ('Other', 'Other'),
+    ]
+    interested_course = models.CharField(max_length=50, choices=COURSE_CHOICES, null=True)
 
     def __str__(self):
         return self.Name

@@ -38,9 +38,14 @@ def register_student(request):
         department = request.POST.get('department', '').strip()
         college = request.POST.get('college', '').strip()
         year = request.POST.get('year', '').strip()
+        gender = request.POST.get('gender', '').strip()
+        interested_course = request.POST.get('interested_course', '').strip()
 
         # Check if any required field is empty
-        if not all([email, password, confirm_password, name, phone_no, qualification, department, college, year]):
+        if not all([
+            email, password, confirm_password, name, phone_no,
+            qualification, department, college, year, gender, interested_course
+        ]):
             messages.error(request, 'All fields are required.')
             return render(request, 'register.html')
 
@@ -68,10 +73,12 @@ def register_student(request):
             qualification=qualification,
             department=department,
             college=college,
-            year=year
+            year=year,
+            gender=gender,
+            interested_course=interested_course,
         )
 
-        return redirect('success')
+        return redirect('success_page')
 
     return render(request, 'register.html')
 

@@ -421,16 +421,52 @@ Prove your potential — earn scholarships and work on real-world innovations!  
             <!-- <label for="department">Department</label> -->
             <div class="invalid-feedback">Please enter your department.</div>
           </div>
+          <!-- Year Selection -->
+        <div class="">
+          <select name="year" id="year-select" class="form-control" style="margin-bottom: 20px;" required onchange="toggleBackDetails()">
+            <option value="" disabled selected>Select Year</option>
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year</option>
+            <option value="Graduated">Graduated</option>
+            <option value="Not Completed">Not Completed</option>
+          </select>
+          <div class="invalid-feedback">Please select your year.</div>
+        </div>
+
+      
+        <!-- Gender Selection -->
+        <div class="">
+          <select name="gender" class="form-control" style="margin-bottom: 20px;" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback">Please select your gender.</div>
+        </div>
+
+          <!-- Interested Course Selection -->
           <div class="">
-            <select name="year" class="form-control" style="margin-bottom: 20px;" required>
-              <option value="" disabled selected>Select Year</option>
-              <option value="1st Year">1st Year</option>
-              <option value="2nd Year">2nd Year</option>
-              <option value="3rd Year">3rd Year</option>
-              <option value="4th Year">4th Year</option>
+            <select name="interested_course" class="form-control" style="margin-bottom: 20px;" required>
+              <option value="" disabled selected>Select Interested Course</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Data Analytics">Data Analytics</option>
+              <option value="Cloud Computing">Cloud Computing</option>
+              <option value="Cyber Security">Cyber Security</option>
+              <option value="Networking">Networking</option>
+              <option value="Python Fullstack">Python Fullstack</option>
+              <option value="MERN Stack">MERN Stack</option>
+              <option value="Java Fullstack">Java Fullstack</option>
+              <option value="Flutter">Flutter</option>
+              <option value="Software Testing">Software Testing</option>
+              <option value="DevOps">DevOps</option>
+              <option value="Other">Other</option>
             </select>
-            <div class="invalid-feedback">Please select your year.</div>
+            <div class="invalid-feedback">Please select your course of interest.</div>
           </div>
+
 
           <div class="">
             <input type="text" name="college" style="margin-bottom: 20px;" class="form-control" id="college" placeholder="College/University/Company" required>

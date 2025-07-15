@@ -23,11 +23,14 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
+        <th>Password</th>
         <th>Phone</th>
         <th>Qualification</th>
         <th>Department</th>
         <th>College</th>
         <th>Year</th>
+        <th>Gender</th>
+        <th>Course</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -36,11 +39,14 @@
       <tr>
         <td>{{ stu.Name }}</td>
         <td>{{ stu.Email }}</td>
+        <td>{{ stu.Password }}</td>
         <td>{{ stu.phone_no }}</td>
         <td>{{ stu.qualification }}</td>
         <td>{{ stu.department }}</td>
         <td>{{ stu.college }}</td>
         <td>{{ stu.year }}</td>
+        <td>{{ stu.gender }}</td>
+        <td>{{ stu.interested_course }}</td>
         <td>
           <a href="{% url 'edit_student' stu.id %}" class="btn btn-warning btn-sm">Edit</a>
           <a href="{% url 'delete_student' stu.id %}" class="btn btn-danger btn-sm">Delete</a>
