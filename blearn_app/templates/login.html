@@ -2,246 +2,211 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% load static %}
-    <title>Student Login</title>
-<link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% load static %}
+  <title>Student Login</title>
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <style>
-        body {
-
- 
-
-
-            background: url("{% static 'images/login_bg_image4.png' %}") no-repeat ;
-            /* background-size: cover; */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: beige;
-
-        }
-
- nav.navbar .navbar-brand img {
-      height: 32px;
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: row;
     }
 
-    nav.navbar .btn {
-      padding: 5px 15px;
+    .left-side {
+      background-color: #ffffff;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .right-side {
+      flex: 1;
+      background: 
+      /* linear-gradient(to right, rgba(5, 0, 16, 0.5), rgb(255, 255, 255)), */
+        url("{% static 'images/login_bg_image4.png' %}") center center no-repeat;
+      background-size: cover;
+      display: none;
       
     }
 
+    @media (min-width: 768px) {
+      .right-side {
+        display: block;
+      }
+    }
 
-        .navbar-brand img {
-            height: 40px;
-        }
+    .login-container {
+      background: #ffffff;
+      padding: 3rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
 
-        main {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            padding: 2rem;
-        }
+    .login-container h2 {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
-        .login-container {
-            position: relative;
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem 3rem;
-            width: 100%;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-            color: black;
-            animation: dropDown 1s ease;
-            border: 1px solid #ccc;
-        }
+    .login-container h6 {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      text-align: center;
+      color: #6c757d;
+      margin-bottom: 1.5rem;
+    }
 
-        /* Hanging effect rope */
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 40px;
-            background: #333;
-        }
+    .form-label {
+      font-weight: 600;
+    }
 
-        @keyframes dropDown {
-            0% {
-                transform: translateY(-80px);
-                opacity: 0;
-            }
+    .form-control {
+      border-radius: 6px;
+      height: 45px;
+      border: 1px solid #888;
+    }
 
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    .form-control:focus {
+      border-color: #0070B9;
+      box-shadow: none;
+    }
 
-        .login-container h2 {
-            font-weight: 700;
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
-        }
+    .btn-login {
+      background-color: #0070B9;
+      color: white;
+      font-weight: bold;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
 
-        .form-label {
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-        }
+    .btn-login:hover {
+      background-color: #005c97;
+    }
 
-        .form-control {
-            border-radius: 6px;
-            height: 45px;
-            border: 1px solid #888;
-        }
+    .text-link {
+      color: #0070B9;
+      font-weight: 600;
+      text-decoration: none;
+    }
 
-        .form-control:focus {
-            border-color: #0070B9;
-            box-shadow: none;
-        }
+    .text-link:hover {
+      text-decoration: underline;
+    }
 
-        .btn-login {
-            width: 100%;
-            background: #0070B9;
-            color: white;
-            font-weight: 600;
-            font-size: 1rem;
-            border-radius: 6px;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 1.5rem;
+    }
 
-        .btn-login:hover {
-            background-color: #005c97;
-        }
+    .social-icons i {
+      font-size: 1.2rem;
+      color: #0070B9;
+    }
 
-        .alert-danger {
-            margin-top: 15px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
 
-        .forgot-link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
 
-        .forgot-link a {
-            color: #0070B9;
-            text-decoration: none;
-            font-weight: 600;
-        }
+     .custom-input {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      border-radius: 0;
+      box-shadow: none;
+      font-size: 1rem;
+      padding: 10px 5px;
+      width: 100%;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+    }
 
-        .forgot-link a:hover {
-            text-decoration: underline;
-        }
+    .custom-input:focus {
+      outline: none;
+      border-bottom: 2px solid #0070B9;
+    }
 
-        /* Margin-right 18px only on large screens and above */
-        @media (min-width: 992px) {
-            .login-container {
-                width: 400px;
-                margin-right: 20px;
-            }
-        }
-
-/* 
-    .nv{
-        background: rgb(245, 245, 220,0.9rem); 
-    } */
-
-    </style>
+    .custom-input::placeholder {
+      color: #aaa;
+      font-size: 0.95rem;
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg   nv">
-  <div class="container-fluid px-0">
-    <a class="navbar-brand ms-3" href="#">
-      <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40">
-    </a>
+  <div class="left-side">
+    <div class="login-container">
+      <h2>WELCOME!</h2>
+      <h6>Login with Email</h6>
 
-    <!-- REMOVE the toggler completely -->
-    <!-- <button class="navbar-toggler me-3" ... > ... </button> -->
+      <form method="POST" novalidate>
+        {% csrf_token %}
 
-    <!-- Menu always visible -->
-    <div class="d-flex flex-column flex-lg-row align-items-end align-items-lg-center gap-2 gap-lg-3 ms-3 mt-2 mt-lg-0">
-        <!-- <div align="right" class="mt-2"> -->
-      <a href="https://wa.me/919917442288" target="_blank" class="btn px-4 py-2" style="background-color: #0070B9; color: white; width: 150px;">
-        <i class="fa-brands fa-whatsapp"></i> Connect us
-      </a>
-      <a href="tel:+919917442288" class="btn px-4 py-2" style="background-color: #0070B9; color: white;width: 150px;">
-        <i class="fa-solid fa-phone"></i> Call us
-      </a>
+        <div class="mb-3">
+          <!-- <label for="email" class="form-label ">Email Address</label> -->
+          <input type="email" id="email" name="email" placeholder="Enter your email" class="custom-input" required />
+        </div>
+
+        <div class="mb-3">
+          <!-- <label for="password" class="form-label">Password</label> -->
+          <input type="password" id="password" name="password" placeholder="Enter password" class="custom-input" required />
+        </div>
+
+        <div class="text-end mb-3">
+          <a href="{% url 'forgot_password' %}" class="text-link">Forgot Your Password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">LOGIN</button>
+
+        {% if error %}
+        <div class="alert alert-danger mt-2">{{ error }}</div>
+        {% endif %}
+      </form>
+
+      <div class="text-center mt-3">
+        Don't have an account?
+        <a href="{% url 'registration_page' %}" class="text-link">Sign up</a>
+      </div>
+
+      <div class="social-icons mt-4">
+        <a href="https://www.instagram.com/blearn_academy?igsh=dmhyeXdyc3dnN3Y4&utm_source=qr" class="text-white">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61576373965437&mibextid=wwXIfr&mibextid=wwXIfr" class="text-white">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://blearnacademy.com/" class="text-white">
+          <i class="fa-solid fa-globe"></i>
+        </a>
+        <a href="https://wa.me/919917442288" class="text-white">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
     </div>
   </div>
-</nav>
 
-    <!-- Main content -->
-    <main>
-        <div class="container">
-            <div class="row justify-content-center justify-content-lg-end">
-                <section class="login-container col-12 col-sm-8 col-md-6 col-lg-4" role="main" aria-labelledby="loginTitle">
-                    <h2 id="loginTitle" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">WELCOME</h2>
-                    <center>
-                    <h6 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" class="text-secondary">Login with Email</h6>
-                    </center><br>
-                    <form method="POST" novalidate >
-                        {% csrf_token %}
+  <div class="right-side">
+    <!-- Gradient image section -->
+  </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control"
-                                required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter password"
-                                class="form-control" required />
-                        </div>
-                        <div class="forgot-link">
-                            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
-                        </div>
-
-                        <button type="submit" class="btn-login" style="background-color: #0070B9; color: white;">LOGIN</button>
-
-                        {% if error %}
-                        <div class="alert alert-danger" role="alert">{{ error }}</div>
-                        {% endif %}
-                    </form>
-
-
-                    <div class="forgot-link">
-                        <span>Don't have an account? </span>
-                        <a href="{% url 'registration_page' %}" >Sign up</a>
-                    </div> <br>
-
-                    <!-- <div align="center">
-                        <span><font> By continuing, you agree to BLEARN ACADEMY Terms of Use and Privacy Policy </font></span>
-                    </div>  -->
-                    <!-- <div class="forgot-link">
-                        <a href="{% url 'forgot_password' %}">Forgot Password?</a>
-                    </div> -->
-                </section>
-            </div>
-        </div>
-    </main>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -941,6 +941,6 @@ def download_students_excel(request):
 
 from .decorators import time_restricted  # adjust path if needed
 
-@time_restricted(start_hour=22, start_minute=0, end_hour=3, end_minute=0)
+@time_restricted(start_hour=3, start_minute=0, end_hour=22, end_minute=0)
 def student_login_page(request):
     return render(request, 'login.html')

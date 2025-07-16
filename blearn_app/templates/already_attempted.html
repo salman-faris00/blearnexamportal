@@ -1,60 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Already Taken</title>
-    <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
-    
-    
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <meta charset="UTF-8">
+  {% load static %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Already Taken</title>
+  <link rel="icon" href="{% static 'images/blearn_logo.png' %}" type="image/jpg">
 
-    <!-- Font Awesome (for icons) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("{% static 'images/dashboard_bg_image6.png' %}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .navbar-brand img {
+      height: 50px;
+    }
+
+    .message-box {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 40px 30px;
+      color: white;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .message-box i {
+      font-size: 60px;
+      color: #ffc107;
+      margin-bottom: 20px;
+    }
+
+    .btn-dashboard {
+      background-color: #0070B9;
+      color: white;
+      border-radius: 25px;
+      padding: 10px 25px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .btn-dashboard:hover {
+      background-color: #005a92;
+    }
+  </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(20, 20, 42);">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" style="height: 50px;">
+<nav class="navbar navbar-expand-lg navbar-dark px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="{% static 'images/blearn_logo.png' %}" alt="Logo">
+    </a>
+    <div class="ms-auto d-flex gap-2 flex-wrap">
+      <a href="https://wa.me/919917442288" target="_blank" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" style=" color: white;">
+        <i class="fa-brands fa-whatsapp"></i> Connect
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-        <div class="d-flex align-items-center gap-2 flex-wrap">
-          <a href="https://wa.me/919917442288" target="_blank" class="btn btn-primary btn-sm" style="color: white;">
-            <i class="fa-brands fa-whatsapp"></i> Connect
-          </a>
-          <a href="tel:+919917442288" class="btn btn-primary btn-sm" style="color: white;">
-            <i class="fa-solid fa-phone"></i> Call
-          </a>
-          <a href="{% url 'logout' %}" class="btn btn-primary btn-sm" style="
-          color: white;">
-            <i class="fa-solid fa-power-off"></i> Logout
-          </a>
-        </div>
-      </div>
+      <a href="tel:+919917442288" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" style=" color: white;">
+        <i class="fa-solid fa-phone"></i> Call
+      </a>
+      <a href="{% url 'logout' %}" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" style="color: white;">
+        <i class="fa-solid fa-power-off"></i> Logout
+      </a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-<!-- Main Content -->
+<!-- Main Message -->
 <div class="container d-flex align-items-center justify-content-center vh-100">
-    <div class="text-center">
-        <h2 class="mb-4">You have already taken the exam.</h2>
-        <a href="{% url 'dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
-    </div>
+  <div class="message-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <h2 class="mb-3">You have already taken the exam</h2>
+    <p class="mb-4">You can view your results or return to the dashboard.</p>
+    <a href="{% url 'dashboard' %}" class="btn btn-dashboard">Back to Dashboard</a>
+  </div>
 </div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
