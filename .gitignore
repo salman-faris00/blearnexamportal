@@ -1,4 +1,35 @@
-db.sqlite3/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+
+# Django
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+
+# Environment files
+.env
+
+# Static and media files (optional)
+staticfiles/
+media/
+
+# VSCode/IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
 
 
 

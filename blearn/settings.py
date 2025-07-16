@@ -42,6 +42,15 @@ INSTALLED_APPS = [
     'blearn_app'
 ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://blearnonline.in",
+    "https://www.blearnonline.in",# if you use www too
+    "http://blearnonline.in",
+    "http://www.blearnonline.in",
+]
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
