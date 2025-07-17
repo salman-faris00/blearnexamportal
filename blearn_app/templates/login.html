@@ -16,42 +16,33 @@
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: row;
-    }
-
-    .left-side {
-      background-color: #ffffff;
-      flex: 1;
+      background: url("{% static 'images/login_right_image.jpg' %}") no-repeat center center/cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
-    .right-side {
-      flex: 1;
-      background: 
-      /* linear-gradient(to right, rgba(5, 0, 16, 0.5), rgb(255, 255, 255)), */
-        url("{% static 'images/login_bg_image4.png' %}") center center no-repeat;
-      background-size: cover;
-      display: none;
-      
-    }
-
-    @media (min-width: 768px) {
-      .right-side {
-        display: block;
-      }
+    .left-shadow-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+      z-index: 0;
     }
 
     .login-container {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.9);
       padding: 3rem;
       border-radius: 12px;
       width: 100%;
       max-width: 400px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 1;
     }
 
     .login-container h2 {
@@ -69,19 +60,27 @@
       margin-bottom: 1.5rem;
     }
 
-    .form-label {
-      font-weight: 600;
-    }
-
-    .form-control {
-      border-radius: 6px;
-      height: 45px;
-      border: 1px solid #888;
-    }
-
-    .form-control:focus {
-      border-color: #0070B9;
+    .custom-input {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      border-radius: 0;
       box-shadow: none;
+      font-size: 1rem;
+      padding: 10px 5px;
+      width: 100%;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+    }
+
+    .custom-input:focus {
+      outline: none;
+      border-bottom: 2px solid #0070B9;
+    }
+
+    .custom-input::placeholder {
+      color: #aaa;
+      font-size: 0.95rem;
     }
 
     .btn-login {
@@ -120,91 +119,75 @@
       font-size: 1.2rem;
       color: #0070B9;
     }
-
-
-
-     .custom-input {
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid #ccc;
-      border-radius: 0;
-      box-shadow: none;
-      font-size: 1rem;
-      padding: 10px 5px;
-      width: 100%;
-      margin-bottom: 20px;
-      transition: border-color 0.3s;
-    }
-
-    .custom-input:focus {
-      outline: none;
-      border-bottom: 2px solid #0070B9;
-    }
-
-    .custom-input::placeholder {
-      color: #aaa;
-      font-size: 0.95rem;
-    }
   </style>
 </head>
 
 <body>
 
-  <div class="left-side">
-    <div class="login-container">
-                <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40" style="display: block; margin: 0 auto; margin-bottom: 7px;">
+  <!-- Left-side shadow overlay -->
+  <div class="left-shadow-overlay"></div>
 
-      <h2>WELCOME!</h2>
-      <h6>Login with Email</h6>
+  <!-- Transparent Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute top-0 w-100 px-4 py-2" style="z-index: 1;">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="30">
+      </a>
 
-      <form method="POST" novalidate>
-        {% csrf_token %}
-
-        <div class="mb-3">
-          <!-- <label for="email" class="form-label ">Email Address</label> -->
-          <input type="email" id="email" name="email" placeholder="Enter your email" class="custom-input" required />
-        </div>
-
-        <div class="mb-3">
-          <!-- <label for="password" class="form-label">Password</label> -->
-          <input type="password" id="password" name="password" placeholder="Enter password" class="custom-input" required />
-        </div>
-
-        <div class="text-end mb-3">
-          <a href="{% url 'forgot_password' %}" class="text-link">Forgot Your Password?</a>
-        </div>
-
-        <button type="submit" class="btn-login">LOGIN</button>
-
-        {% if error %}
-        <div class="alert alert-danger mt-2">{{ error }}</div>
-        {% endif %}
-      </form>
-
-      <div class="text-center mt-3">
-        Don't have an account?
-        <a href="{% url 'registration_page' %}" class="text-link">Sign up</a>
-      </div>
-
-      <div class="social-icons mt-4">
-        <a href="https://www.instagram.com/blearn_academy?igsh=dmhyeXdyc3dnN3Y4&utm_source=qr" class="text-white">
-            <i class="fa-brands fa-instagram"></i>
+      <!-- Right-side Links -->
+      <div class="ms-auto d-flex align-items-center gap-4 flex-wrap">
+        <a href="https://wa.me/919917442288" target="_blank"
+          class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+          <i class="fa-brands fa-whatsapp"></i> Connect
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61576373965437&mibextid=wwXIfr&mibextid=wwXIfr" class="text-white">
-          <i class="fa-brands fa-facebook"></i>
-        </a>
-        <a href="https://blearnacademy.com/" class="text-white">
-          <i class="fa-solid fa-globe"></i>
-        </a>
-        <a href="https://wa.me/919917442288" class="text-white">
-          <i class="fa-brands fa-whatsapp"></i>
+        <a href="tel:+919917442288"
+          class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+          <i class="fa-solid fa-phone"></i> Call
         </a>
       </div>
     </div>
-  </div>
+  </nav>
 
-  <div class="right-side">
-    <!-- Gradient image section -->
+  <!-- Login Form -->
+  <div class="login-container">
+    <img src="{% static 'images/blearn_logo.png' %}" alt="Logo" height="40" style="display: block; margin: 0 auto; margin-bottom: 7px;">
+
+    <h2>WELCOME!</h2>
+    <h6>Login with Email</h6>
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="email" id="email" name="email" placeholder="Enter your email" class="custom-input" required />
+      </div>
+
+      <div class="mb-3">
+        <input type="password" id="password" name="password" placeholder="Enter password" class="custom-input" required />
+      </div>
+
+      <div class="text-end mb-3">
+        <a href="{% url 'forgot_password' %}" class="text-link">Forgot Your Password?</a>
+      </div>
+
+      <button type="submit" class="btn-login">LOGIN</button>
+
+      {% if error %}
+      <div class="alert alert-danger mt-2">{{ error }}</div>
+      {% endif %}
+    </form>
+
+    <div class="text-center mt-3">
+      Don't have an account?
+      <a href="{% url 'registration_page' %}" class="text-link">Sign up</a>
+    </div>
+
+    <div class="social-icons mt-4">
+      <a href="https://www.instagram.com/blearn_academy?igsh=dmhyeXdyc3dnN3Y4&utm_source=qr"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61576373965437&mibextid=wwXIfr&mibextid=wwXIfr"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://blearnacademy.com/"><i class="fa-solid fa-globe"></i></a>
+      <a href="https://wa.me/919917442288"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
   </div>
 
   <!-- Bootstrap JS -->

@@ -10,7 +10,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('logout/', views.logout_student, name='logout'),
     path('exam_portal/', views.exam_portal, name='exam_portal'),
-      path('submit_exam/', views.submit_exam, name='submit_exam'),
+    path('submit_exam/', views.submit_exam, name='submit_exam'),
       
       # path('log_violation/', views.log_violation, name='log_violation'),
     
