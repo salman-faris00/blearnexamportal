@@ -9,8 +9,8 @@ class TimeRestrictionMiddleware:
     def __call__(self, request):
         now = datetime.now().time()  # current time only
 
-        start_time = time(0, 0)  # 5:00 PM
-        end_time = time(23, 59)    # 6:00 PM
+        start_time = time(9, 0)  # 8:00 PM
+        end_time = time(21, 0)    # 21:00 PM
 
         # Allow access only between 5:00 PM and 6:00 PM
         if start_time <= now <= end_time:
